@@ -67,5 +67,5 @@ print("frutas: ", frutas)
 calificaciones = []
 libros = list()
 print('calificaciones: ', calificaciones)
-print()
+print('libros: ', libros)
 
