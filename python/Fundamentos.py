@@ -68,3 +68,8 @@ libros = list()
 print('calificaciones: ', calificaciones)
 print('libros: ', libros)
 
+frutas.reverse()
+print("frutas: ", frutas)
+frutas.sort()
+print("frutas: ", frutas)
+
