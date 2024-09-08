@@ -1,4 +1,4 @@
-from Funciones import nuevo_tema
+from Funciones import nuevo_tema, nuevo_subtema
 
 
 print('hola mundo mi nombre es "Sigfrido"') 
@@ -73,3 +73,50 @@ print("frutas: ", frutas)
 frutas.sort()
 print("frutas: ", frutas)
 
+nuevo_tema("diccionarios")
+
+persona ={"nombre": "Pedro", 
+          "apellido": "Pérez",
+          "edad": 48, 
+          "estatura": 1.70, 
+          "hijos": ["Casimira", "Bryan", "Eliud"]}
+
+print('persona: ', persona)
+
+
+print("persona.keys(): ", persona.keys())
+print("persona.values(): ", persona.values())
+
+print('persona.get("nombre"):', persona.get("nombre"))
+print('persona.get("estatura"):', persona.get("estatura"))
+
+print("persona.items(): ", persona.items())
+
+nuevo_tema("Ciclos")
+nuevo_subtema("for")
+for i in range(10):
+    print(i)
+
+print("#########")
+for i in range(3,10):
+    print(i)
+
+print("#########")
+for i in range(3,10, 2):
+    print(i)
+
+print ("len(frutas):", len(frutas))
+
+for f in frutas:
+    print(f)
+print("######### con len")
+for indice in range(len(frutas)):
+    print("Indice ", indice , frutas[indice])
+
+print("######### con enumerate")
+for indice, fruta in enumerate(frutas):
+    print(indice, fruta)
+
+print("######### for en un diccionario")
+for key, value in persona.items():
+    print(key, value)
