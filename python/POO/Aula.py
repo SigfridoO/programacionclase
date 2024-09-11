@@ -1,4 +1,9 @@
 from Alumno import Alumno
 
-jesus = Alumno()
-print(jesus)
+
+def main():
+    jesus = Alumno()
+    print(jesus)
+    
+if __name__ == "__main__":
+    main()
