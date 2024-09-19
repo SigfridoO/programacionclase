@@ -8,6 +8,7 @@ class Ventana (QMainWindow):
 
         titulo = QLabel("Bienvenido")
         self.setCentralWidget(titulo)
+        
 
         self.setFixedSize(500, 300)
         self.setMinimumSize(200, 200)

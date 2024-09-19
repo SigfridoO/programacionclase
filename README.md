@@ -1,4 +1,6 @@
-# programacionclase
+# Sistema de Riego
 
+## Requisitos para instalación
+1. para poder instalar el programa debes hacer
 
-## Este codigo incluye todos los ejerciciós vistos durante la clase de programación, basandose en Python
+## Instrucciones
