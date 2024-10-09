@@ -1,6 +1,9 @@
+
 from Funciones import nuevo_tema, nuevo_subtema
 
+print(__file__)
 
+exit()
 print('hola mundo mi nombre es "Sigfrido"') 
 print('saludos')
 
@@ -77,20 +80,20 @@ nuevo_tema("diccionarios")
 
 persona ={"nombre": "Pedro", 
           "apellido": "Pérez",
-          "edad": 48, 
-          "estatura": 1.70, 
-          "hijos": ["Casimira", "Bryan", "Eliud"]}
+          "edad": 48, }
 
-print('persona: ', persona)
+# print('persona: ', persona)
+# persona.update({"nombre": "Juan"})
+# persona['nombre'] ='julio'
+# print("Imprmiendo nuevamente persona: ", {++a, "nombre" : "javier"})
+# exit()
+# print("persona.keys(): ", persona.keys())
+# print("persona.values(): ", persona.values())
 
+# print('persona.get("nombre"):', persona.get("nombre"))
+# print('persona.get("estatura"):', persona.get("estatura"))
 
-print("persona.keys(): ", persona.keys())
-print("persona.values(): ", persona.values())
-
-print('persona.get("nombre"):', persona.get("nombre"))
-print('persona.get("estatura"):', persona.get("estatura"))
-
-print("persona.items(): ", persona.items())
+# print("persona.items(): ", persona.items())
 
 nuevo_tema("Ciclos")
 nuevo_subtema("for")
@@ -120,3 +123,5 @@ for indice, fruta in enumerate(frutas):
 print("######### for en un diccionario")
 for key, value in persona.items():
     print(key, value)
+
+print(__file__)
