@@ -40,8 +40,7 @@ class Semaforo:
             print("Salida: ", rojo, amarillo, verde)
             time.sleep(0.001)
 
-    def iniciar_semaforo(self):
-        pass
+
 
     def establecer_intermediario(self, intermediario):
         self.intermediario = intermediario
