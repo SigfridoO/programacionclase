@@ -1,14 +1,16 @@
 datos.json
-**/Monitor/logs/P*
-*.env
-**/eum-env/
-**/~*
 ~/.vscode-root/
 .vscode/*
-webserver/media/profiles/*
-webserver/media/locatarios/*
-vista/media/locatarios/*
 errlog.txt
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -113,14 +115,7 @@ celerybeat.pid
 # SageMath parsed files
 *.sage.py
 
-# Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
+
 
 # Spyder project settings
 .spyderproject
@@ -139,9 +134,3 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-
-
-#ignorar el logo
-
-app/Monitor/Imagenes/logo.png
-app/Monitor/Imagenes/logo_editado.png
