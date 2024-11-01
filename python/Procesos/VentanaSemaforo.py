@@ -190,6 +190,6 @@ def main ():
     ventana = VentanaSemaforo()
     ventana.show()
     sys.exit(app.exec())
-
+ #hola
 if __name__ == "__main__":
     main()
