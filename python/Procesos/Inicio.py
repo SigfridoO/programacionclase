@@ -8,12 +8,13 @@ from VentanaSemaforo import VentanaSemaforo
 class Inicio(VentanaSemaforo):
     def __init__(self):
         super().__init__()
-        print("Dentro de Inicio")
-        intermediario = Intermediario()
-
         semaforo = Semaforo()
+
+        intermediario = Intermediario()
         semaforo.establecer_intermediario(intermediario)
-        # semaforo.iniciar_semaforo()
+
+        self.establecer_controlador(semaforo)
+        semaforo.establecer_worker(self.obtener_worker())
 
 def main():
     print("Dentro de main")

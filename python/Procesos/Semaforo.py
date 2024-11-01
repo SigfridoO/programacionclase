@@ -10,10 +10,12 @@ class Semaforo:
         self.TON_01 = Temporizador("TON 1", 1)
         self.TON_02 = Temporizador("TON 2", 6)
         self.intermediario = None
-        
+        self.worker = None        
         self.tarea = threading.Thread(target=self.iniciar_semaforo)
         self.tarea.start()
         print ("Despues del constructor de semaforo")
+
+
 
     def iniciar_semaforo(self):
         print("Dentro de iniciar semaforro")
@@ -36,6 +38,9 @@ class Semaforo:
                 self.intermediario.Y_00 = rojo
                 self.intermediario.Y_01 = amarillo
                 self.intermediario.Y_02 = verde
+            
+            if self.worker:
+                self.worker.senal_luz_roja(rojo)
 
             print("Salida: ", rojo, amarillo, verde)
             time.sleep(0.001)
@@ -43,6 +48,8 @@ class Semaforo:
     def establecer_intermediario(self, intermediario):
         self.intermediario = intermediario
 
+    def establecer_worker(self, worker):
+        self.worker = worker
 def main():
     semaforo = Semaforo()
 
