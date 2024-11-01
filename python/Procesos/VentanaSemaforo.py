@@ -11,6 +11,8 @@ def abs_path(ruta:str):
 
 class WorkerSignals(QObject):
     luz_roja = Signal(bool)
+    luz_amarilla = Signal(bool)
+    luz_verde = Signal(bool)
 
     def __init__(self):
         super().__init__()
@@ -28,6 +30,20 @@ class Worker(QRunnable):
     def senal_luz_roja(self, estado:bool = False):
         try:
             self.signals.luz_roja.emit(estado)
+        except Exception as e:
+            print(e)
+
+        
+    def senal_luz_amarilla(self, estado:bool = False):
+        try:
+            self.signals.luz_amarilla.emit(estado)
+        except Exception as e:
+            print(e)
+
+        
+    def senal_luz_verde(self, estado:bool = False):
+        try:
+            self.signals.luz_verde.emit(estado)
         except Exception as e:
             print(e)
 
@@ -69,13 +85,13 @@ class VentanaSemaforo(QMainWindow):
         caja3.setLayout(layout_derecho)
 
         # Elementos del layout derecho
-        self.indicador_rojo = self.crear_indicador("red")
-        caja5 = self.crear_indicador("yellow")
-        caja6 = self.crear_indicador("green")
+        self.indicador_rojo = self.crear_indicador("red", QWidget())
+        self.indicador_amarillo = self.crear_indicador("yellow", QWidget())
+        self.indicador_verde = self.crear_indicador("green", QWidget())
         caja7 = Caja("gray")
         layout_derecho.addWidget(self.indicador_rojo)
-        layout_derecho.addWidget(caja5)
-        layout_derecho.addWidget(caja6)
+        layout_derecho.addWidget(self.indicador_amarillo)
+        layout_derecho.addWidget(self.indicador_verde)
         layout_derecho.addWidget(caja7)
 
         # Elementos del lado izquierdo
@@ -125,8 +141,8 @@ class VentanaSemaforo(QMainWindow):
         self.threadpool = QThreadPool()
         self.worker = Worker()
         self.worker.signals.luz_roja.connect(self.cambiar_luz_roja)
-
-
+        self.worker.signals.luz_amarilla.connect(self.cambiar_luz_amarilla)
+        self.worker.signals.luz_verde.connect(self.cambiar_luz_verde)
         self.threadpool.start(self.worker)
 
         # Enlace con el control(semaforo)
@@ -139,22 +155,28 @@ class VentanaSemaforo(QMainWindow):
         return self.worker
     
     def cambiar_luz_roja(self, estado):
-        caja =  self.indicador_rojo
-        tamanio_circulo = 50
-        caja.setFixedSize(tamanio_circulo, tamanio_circulo)
-        
         if estado:
             color = "red"
         else:
             color= "gray"
+        caja = self.crear_indicador(color, self.indicador_rojo)
 
-        caja.setStyleSheet(f"border: 1px solid black; \
-                           background-color: {color}; \
-                           border-radius: {tamanio_circulo/2}px; \
-                           ")
+    def cambiar_luz_amarilla(self, estado):
+        if estado:
+            color = "yellow"
+        else:
+            color= "gray"
+        caja = self.crear_indicador(color, self.indicador_amarillo)
 
-    def crear_indicador(self, color):
-        caja =  QWidget()
+    def cambiar_luz_verde(self, estado):
+        if estado:
+            color = "green"
+        else:
+            color= "gray"
+        caja = self.crear_indicador(color, self.indicador_verde)
+
+
+    def crear_indicador(self, color, caja):
         tamanio_circulo = 50
         caja.setFixedSize(tamanio_circulo, tamanio_circulo)
         caja.setStyleSheet(f"border: 1px solid black; \

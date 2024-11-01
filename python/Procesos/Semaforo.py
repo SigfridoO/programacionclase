@@ -41,6 +41,8 @@ class Semaforo:
             
             if self.worker:
                 self.worker.senal_luz_roja(rojo)
+                self.worker.senal_luz_amarilla(amarillo)
+                self.worker.senal_luz_verde(verde)
 
             print("Salida: ", rojo, amarillo, verde)
             time.sleep(0.001)
