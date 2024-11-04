@@ -1,7 +1,9 @@
 from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, \
     QWidget, QGridLayout, QVBoxLayout
-from PyQt6.QtCore import Qt, QRunnable, QThreadPool, pyqtSignal as Signal, QObject
-from PyQt6.QtGui import QFontDatabase, QFont
+from PyQt6.QtCore import Qt, QRunnable, QThreadPool, pyqtSignal as Signal, QObject 
+
+
+from PyQt6.QtGui import QFontDatabase, QFont, QCloseEvent
 
 import sys
 from pathlib import Path
@@ -145,8 +147,14 @@ class VentanaSemaforo(QMainWindow):
         self.worker.signals.luz_verde.connect(self.cambiar_luz_verde)
         self.threadpool.start(self.worker)
 
+        #Enlace con la electrónica
+        self.electronica = None
+
         # Enlace con el control(semaforo)
         self.controlador = None
+
+    def establecer_electronica(self, electronica):
+        self.electronica = electronica
 
     def establecer_controlador(self, controlador):
         self.controlador = controlador
@@ -184,6 +192,15 @@ class VentanaSemaforo(QMainWindow):
                            border-radius: {tamanio_circulo/2}px; \
                            ")
         return caja
+    
+    def closeEvent(self, event:QCloseEvent):
+        print("Se ha presionado el boton cerrar")
+        if self.electronica:
+            self.electronica.detener()
+
+        if self.controlador:
+            self.controlador.detener()
+
 def main ():
     print("Dentro de main")
     app = QApplication(sys.argv)

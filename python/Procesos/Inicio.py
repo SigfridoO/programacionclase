@@ -8,9 +8,11 @@ from VentanaSemaforo import VentanaSemaforo
 class Inicio(VentanaSemaforo):
     def __init__(self):
         super().__init__()
-        semaforo = Semaforo()
 
         intermediario = Intermediario()
+        self.establecer_electronica(intermediario)
+
+        semaforo = Semaforo()
         semaforo.establecer_intermediario(intermediario)
 
         self.establecer_controlador(semaforo)

@@ -21,7 +21,7 @@ class Intermediario:
         self.Y_00 = False
         self.Y_01 = False
         self.Y_02 = False
-
+        self.funcionando_pines = False
         self.configurar_senales()
 
     def configurar_senales(self):
@@ -48,8 +48,8 @@ class Intermediario:
                 self.DO_02: gpiod.LineSettings(direction=Direction.OUTPUT, output_value=Value.INACTIVE),
             },
         )
-        tarea = threading.Thread(target=self.iniciar)
-        tarea.start()
+        self.tarea = threading.Thread(target=self.iniciar)
+        self.tarea.start()
 
     def iniciar(self):
         self.funcionando_pines = True
@@ -64,6 +64,11 @@ class Intermediario:
 
             # print(self.X_00)
             time.sleep(0.001)
+    
+    def detener(self):
+        self.funcionando_pines = False
+        if self.tarea:
+            self.tarea.join()
 
 def main():
     intermediario = Intermediario()

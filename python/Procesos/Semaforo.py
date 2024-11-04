@@ -9,6 +9,7 @@ class Semaforo:
         self.TON_00 = Temporizador("TON 0", 5)
         self.TON_01 = Temporizador("TON 1", 1)
         self.TON_02 = Temporizador("TON 2", 6)
+        self.funcionando = False
         self.intermediario = None
         self.worker = None        
         self.tarea = threading.Thread(target=self.iniciar_semaforo)
@@ -19,7 +20,8 @@ class Semaforo:
 
     def iniciar_semaforo(self):
         print("Dentro de iniciar semaforro")
-        while True:
+        self.funcionando = True
+        while self.funcionando:
             
             self.TON_00.entrada = not self.TON_02.salida
             self.TON_00.actualizar()
@@ -52,6 +54,12 @@ class Semaforo:
 
     def establecer_worker(self, worker):
         self.worker = worker
+
+    def detener(self):
+        self.funcionando = False
+        if self.tarea:
+            self.tarea.join()
+
 def main():
     semaforo = Semaforo()
 
