@@ -1,5 +1,5 @@
 from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, \
-    QWidget, QGridLayout, QVBoxLayout
+    QWidget, QGridLayout, QVBoxLayout, QPushButton
 from PyQt6.QtCore import Qt, QRunnable, QThreadPool, pyqtSignal as Signal, QObject 
 
 
@@ -15,6 +15,9 @@ class WorkerSignals(QObject):
     luz_roja = Signal(bool)
     luz_amarilla = Signal(bool)
     luz_verde = Signal(bool)
+
+    boton_00 = Signal(int, bool)
+    boton_01 = Signal(int, bool)
 
     def __init__(self):
         super().__init__()
@@ -46,6 +49,12 @@ class Worker(QRunnable):
     def senal_luz_verde(self, estado:bool = False):
         try:
             self.signals.luz_verde.emit(estado)
+        except Exception as e:
+            print(e)
+
+    def senal_botones(self, indice:int, estado:bool=False):
+        try:
+            self.signals.boton_00.emit(indice, estado)
         except Exception as e:
             print(e)
 
@@ -105,15 +114,18 @@ class VentanaSemaforo(QMainWindow):
         layout_vertical1.addLayout(grid_layout2)
 
         # Elementos del grid_layout1
-        caja_izq1 = Caja("cyan")
-        caja_izq2 = Caja("orange")
-        caja_izq3 = Caja("purple")
+        self.caja_izq1 = Caja("cyan")
+        self.caja_izq2 = Caja("orange")
+        self.caja_izq3 = QPushButton("Prender")
+        self.caja_izq3.setStyleSheet("background-color: gray")
+        self.caja_izq3.setCheckable(True)
+        
         etiqueta_botones = QLabel("Botones")
         etiqueta_botones.setAlignment(Qt.AlignmentFlag.AlignCenter)
         grid_layout1.addWidget(etiqueta_botones, 0, 0, 1, 3)        
-        grid_layout1.addWidget(caja_izq1, 1, 0, 1, 1)        
-        grid_layout1.addWidget(caja_izq2, 1, 1, 1, 1)        
-        grid_layout1.addWidget(caja_izq3, 1, 2, 1, 1)     
+        grid_layout1.addWidget(self.caja_izq1, 1, 0, 1, 1)        
+        grid_layout1.addWidget(self.caja_izq2, 1, 1, 1, 1)        
+        grid_layout1.addWidget(self.caja_izq3, 1, 2, 1, 1)     
 
         # Elementos de grid_layout2
         lista_de_cajas = []   
@@ -139,12 +151,17 @@ class VentanaSemaforo(QMainWindow):
         self.setCentralWidget(widget)
         self.resize(400, 250)
 
+        self.caja_izq3.clicked.connect(self.activar_led_virtual)
+
         # Manejo de la clase worker
         self.threadpool = QThreadPool()
         self.worker = Worker()
         self.worker.signals.luz_roja.connect(self.cambiar_luz_roja)
         self.worker.signals.luz_amarilla.connect(self.cambiar_luz_amarilla)
         self.worker.signals.luz_verde.connect(self.cambiar_luz_verde)
+
+        self.worker.signals.boton_00.connect(self.cambiar_estado_boton)
+
         self.threadpool.start(self.worker)
 
         #Enlace con la electrónica
@@ -152,6 +169,11 @@ class VentanaSemaforo(QMainWindow):
 
         # Enlace con el control(semaforo)
         self.controlador = None
+
+    def activar_led_virtual(self, valor):
+        print("Se activo el led", valor)
+        if self.controlador:
+            self.controlador.activar_boton_vitual(valor)
 
     def establecer_electronica(self, electronica):
         self.electronica = electronica
@@ -182,6 +204,15 @@ class VentanaSemaforo(QMainWindow):
         else:
             color= "gray"
         caja = self.crear_indicador(color, self.indicador_verde)
+
+    def cambiar_estado_boton(self, indice:int, valor:bool):
+        match indice:
+            case 0:
+                self.caja_izq1.setHidden(not valor)
+            case 1:
+                self.caja_izq2.setHidden(not valor)
+            case _:
+                print ("Indice no considerado")
 
 
     def crear_indicador(self, color, caja):
