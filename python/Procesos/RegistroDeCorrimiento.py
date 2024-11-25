@@ -1,7 +1,7 @@
 import time
 
 class RegistroDeCorrimiento:
-    TIEMPO = 1
+    TIEMPO = 0.01
 
     def __init__(self) -> None:
         self.latch = False

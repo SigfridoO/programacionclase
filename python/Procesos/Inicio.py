@@ -11,6 +11,12 @@ class Inicio(VentanaSemaforo):
         super().__init__()
 
         intermediario = Intermediario()
+
+        intermediario.Y_08 = 1
+        intermediario.Y_09 = 1
+        intermediario.Y_11 = 1
+        intermediario.Y_23 = 1
+
         self.establecer_electronica(intermediario)
 
         semaforo = Semaforo()
