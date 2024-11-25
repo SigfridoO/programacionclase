@@ -59,7 +59,7 @@ class Semaforo:
                 self.worker.senal_luz_amarilla(amarillo)
                 self.worker.senal_luz_verde(verde)
 
-            print("Salida: ", rojo, amarillo, verde, self.boton_00, self.boton_01, self.boton_virtual_00)
+            # print("Salida: ", rojo, amarillo, verde, self.boton_00, self.boton_01, self.boton_virtual_00)
             time.sleep(0.001)
 
     def activar_boton_vitual(self, estado):
